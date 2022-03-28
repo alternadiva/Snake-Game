@@ -1,4 +1,5 @@
 /* Draw canvas */
+
 const board = document.getElementById("game-board");
 
 const canvas = document.createElement("canvas");
@@ -23,16 +24,25 @@ function drawCanvas() {
 let rectangleCoords = {
   x: 0,
   y: 0,
+  width: 50,
+  height: 50,
 };
 
 function draw() {
   context.clearRect(0, 0, widthCanvas, heightCanvas); //clear the previous position
-  context.fillRect(rectangleCoords.x, rectangleCoords.y, 50, 50); //add new position
+  context.fillRect(
+    //add new position
+    rectangleCoords.x,
+    rectangleCoords.y,
+    rectangleCoords.width,
+    rectangleCoords.height
+  );
 }
 
 function update() {
   //update the position of the rectangle
   rectangleCoords.x += 1;
+  rectangleCoords.y += 1;
 }
 
 function loop() {
@@ -44,3 +54,17 @@ function loop() {
 }
 
 loop();
+
+// Add event listeners
+
+window.addEventListener("keydown", keyDown);
+
+function keyDown({ which }) {
+  console.log(which);
+}
+
+window.addEventListener("keyup", keyup);
+
+function keyup({ which }) {
+  console.log(which);
+}
