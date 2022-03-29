@@ -5,8 +5,8 @@ const board = document.getElementById("game-board");
 const canvas = document.createElement("canvas");
 const context = canvas.getContext("2d");
 
-const widthCanvas = 500;
-const heightCanvas = 500;
+const widthCanvas = 400;
+const heightCanvas = 400;
 
 window.addEventListener("load", drawCanvas);
 
@@ -34,6 +34,9 @@ function drawCanvas() {
   } else if (direction === "down") {
     rectangle[0].y += rectangle[0].height;
   }
+
+  drawTarget();
+
   board.appendChild(canvas);
 }
 
@@ -42,10 +45,10 @@ function drawCanvas() {
 let rectangle = [];
 
 rectangle[0] = {
-  x: 50,
-  y: 50,
-  width: 25,
-  height: 25,
+  x: Math.floor(widthCanvas / 2),
+  y: Math.floor(heightCanvas / 2),
+  width: 20,
+  height: 20,
 };
 
 function drawRect(index) {
@@ -76,6 +79,18 @@ function keyDown({ which }) {
   } else if (which === 40 && direction !== "up") {
     direction = "down";
   }
+}
+
+/* Place target randomly */
+
+let target = {
+  x: Math.floor(Math.random() * (widthCanvas - 1)),
+  y: Math.floor(Math.random() * (heightCanvas - 1)),
+};
+
+function drawTarget() {
+  context.fillStyle = "blue";
+  context.fillRect(target.x, target.y, rectangle[0].width, rectangle[0].height);
 }
 
 // Update canvas every 0.1s
