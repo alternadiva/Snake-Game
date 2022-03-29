@@ -34,6 +34,9 @@ function drawCanvas() {
   } else if (direction === "down") {
     rectangle[0].y += rectangle[0].height;
   }
+
+  drawTarget();
+
   board.appendChild(canvas);
 }
 
@@ -76,6 +79,13 @@ function keyDown({ which }) {
   } else if (which === 40 && direction !== "up") {
     direction = "down";
   }
+}
+
+/* Place target randomly */
+
+function drawTarget() {
+  context.fillStyle = "blue";
+  context.fillRect(300, 300, rectangle[0].width, rectangle[0].height);
 }
 
 // Update canvas every 0.1s
