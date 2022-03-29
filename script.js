@@ -16,46 +16,72 @@ function drawCanvas() {
 
   canvas.style.backgroundColor = "grey";
 
+  //grow tail
+  for (let i = 0; i < rectangle.length; i++) {
+    drawRect(i);
+  }
+
+  //move head
+  let x = rectangle[0].x;
+  let y = rectangle[0].y;
+
+  if (direction === "left") {
+    rectangle[0].x -= rectangle[0].width;
+  } else if (direction === "right") {
+    rectangle[0].x += rectangle[0].width;
+  } else if (direction === "up") {
+    rectangle[0].y -= rectangle[0].height;
+  } else if (direction === "down") {
+    rectangle[0].y += rectangle[0].height;
+  }
   board.appendChild(canvas);
 }
 
 /* Move object */
 
-let rectangleCoords = {
-  x: 0,
-  y: 0,
-  width: 50,
-  height: 50,
+let rectangle = [];
+
+rectangle[0] = {
+  x: 50,
+  y: 50,
+  width: 25,
+  height: 25,
 };
 
-function draw() {
+function drawRect(index) {
   context.clearRect(0, 0, widthCanvas, heightCanvas); //clear the previous position
   context.fillRect(
     //add new position
-    rectangleCoords.x,
-    rectangleCoords.y,
-    rectangleCoords.width,
-    rectangleCoords.height
+    rectangle[index].x,
+    rectangle[index].y,
+    rectangle[index].width,
+    rectangle[index].height
   );
 }
 
-function update() {
-  //update the position of the rectangle
-  rectangleCoords.x += 1;
-  rectangleCoords.y += 1;
+let direction;
+
+// Add key event listener
+
+window.addEventListener("keydown", keyDown);
+
+// Set the direction and avoid turning opposite direction
+function keyDown({ which }) {
+  if (which === 37 && direction !== "right") {
+    direction = "left";
+  } else if (which === 39 && direction !== "left") {
+    direction = "right";
+  } else if (which === 38 && direction !== "down") {
+    direction = "up";
+  } else if (which === 40 && direction !== "up") {
+    direction = "down";
+  }
 }
 
-function loop() {
-  //animate the movement of the rectangle
-  update();
-  draw();
+// Update canvas every 0.1s
+setInterval(drawCanvas, 100);
 
-  window.requestAnimationFrame(loop);
-}
-
-loop();
-
-class Rectangle {
+/* class Rectangle {
   constructor(x, y, width, height, color, speed, direction, length) {
     this.x = x;
     this.y = y;
@@ -68,21 +94,4 @@ class Rectangle {
   }
 }
 
-let box = new Rectangle(0, 0, 50, 50, "blue", 5, "right", 3);
-
-// Add key event listener
-
-window.addEventListener("keydown", keyDown);
-
-// Set the direction and avoid turning opposite direction
-function keyDown({ which }) {
-  if (which === 37 && box.direction !== "right") {
-    box.direction = "left";
-  } else if (which === 39 && box.direction !== "left") {
-    box.direction = "right";
-  } else if (which === 38 && box.direction !== "down") {
-    box.direction = "up";
-  } else if (which === 40 && box.direction !== "up") {
-    box.direction = "down";
-  }
-}
+let box = new Rectangle(0, 0, 50, 50, "blue", 5, "right", 3); */
