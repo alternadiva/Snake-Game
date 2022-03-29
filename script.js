@@ -55,16 +55,34 @@ function loop() {
 
 loop();
 
-// Add event listeners
+class Rectangle {
+  constructor(x, y, width, height, color, speed, direction, length) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.color = color;
+    this.speed = speed;
+    this.direction = direction;
+    this.length = new Array(length);
+  }
+}
+
+let box = new Rectangle(0, 0, 50, 50, "blue", 5, "right", 3);
+
+// Add key event listener
 
 window.addEventListener("keydown", keyDown);
 
+// Set the direction and avoid turning opposite direction
 function keyDown({ which }) {
-  console.log(which);
-}
-
-window.addEventListener("keyup", keyup);
-
-function keyup({ which }) {
-  console.log(which);
+  if (which === 37 && box.direction !== "right") {
+    box.direction = "left";
+  } else if (which === 39 && box.direction !== "left") {
+    box.direction = "right";
+  } else if (which === 38 && box.direction !== "down") {
+    box.direction = "up";
+  } else if (which === 40 && box.direction !== "up") {
+    box.direction = "down";
+  }
 }
