@@ -120,6 +120,8 @@ function drawCanvas() {
   ) {
     saveScore(score);
     clearInterval(update);
+    overlay.style.display = "flex";
+    startBtn.innerText = "RESTART";
   }
 
   //scorePoints();
@@ -185,6 +187,29 @@ function speedUp(points) {
 
 // Update canvas every 0.1s
 let update = setInterval(drawCanvas, speed);
+
+/* Game Start */
+
+let overlay = document.createElement("div");
+overlay.id = "overlay";
+
+let startBtn = document.createElement("button");
+startBtn.innerText = "START";
+startBtn.id = "start";
+
+overlay.appendChild(startBtn);
+
+board.appendChild(overlay);
+
+startBtn.addEventListener("click", startGame);
+window.addEventListener("keypress", startGame);
+
+function startGame() {
+  overlay.style.display = "none";
+  setTimeout(function () {
+    direction = "down";
+  }, 500);
+}
 
 /* class Rectangle {
   constructor(x, y, width, height, color, speed, direction, length) {

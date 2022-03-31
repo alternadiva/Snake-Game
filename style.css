@@ -21,6 +21,7 @@ h1 {
 }
 
 #game-board {
+  position: relative;
   width: 100%;
 }
 
@@ -47,4 +48,30 @@ canvas {
 #score,
 #best-score {
   color: rgb(233, 63, 53);
+}
+
+#overlay {
+  width: 400px;
+  height: 400px;
+  background-color: rgba(131, 103, 67, 0.637);
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+#start {
+  cursor: pointer;
+  width: 150px;
+  margin: 170px 0;
+  font-family: "Chewy", cursive;
+  font-size: 1.5rem;
+  color: rgb(233, 63, 53);
+  letter-spacing: 4px;
+  background-color: white;
+  border: 5px solid rgb(69, 175, 7);
+  border-radius: 10px;
 }
