@@ -101,9 +101,22 @@ function drawCanvas() {
     y: frontY,
   };
 
+  // collision
+
   rectangle.unshift(newFront);
 
   drawTarget();
+
+  //game over
+  if (
+    frontX < 0 ||
+    frontY < 0 ||
+    frontX > widthCanvas - 20 ||
+    frontY > heightCanvas - 20 ||
+    collision(newFront, rectangle)
+  ) {
+    clearInterval(update);
+  }
 
   //scorePoints();
 
@@ -130,7 +143,7 @@ function drawTarget() {
 /* Detect collision */
 
 function collision(front, array) {
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 3; i < array.length; i++) {
     if (front.x == array[i].x && front.y == array[i].y) {
       return true;
     }
@@ -144,7 +157,7 @@ let score = 0;
 
 /* Set speed */
 
-let speed = 130;
+let speed = 140;
 
 // Update canvas every 0.1s
 let update = setInterval(drawCanvas, speed);
