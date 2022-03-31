@@ -70,7 +70,6 @@ function drawCanvas() {
       };
     }
   }
-  console.log(rectangle.length);
 
   //move head
   let frontX = rectangle[0].x;
@@ -96,8 +95,6 @@ function drawCanvas() {
   } else {
     rectangle.pop();
   }
-
-  console.log(score);
 
   let newFront = {
     x: frontX,
