@@ -1,4 +1,50 @@
+html {
+  font-family: "Chewy", cursive;
+  font-family: "Patrick Hand", cursive;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   height: 100%;
-  background-color: rgb(241, 241, 241);
+  background-color: rgb(240, 238, 255);
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: rgb(69, 175, 7);
+  font-family: "Chewy", cursive;
+  letter-spacing: 3px;
+  text-align: center;
+  margin: 30px 0 0 0;
+  padding: 0;
+}
+
+#game-board {
+  width: 100%;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+#score-board {
+  width: 350px;
+  display: block;
+  margin: 0 auto;
+}
+
+#score-display {
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.5rem;
+  width: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#score,
+#best-score {
+  color: rgb(233, 63, 53);
 }
