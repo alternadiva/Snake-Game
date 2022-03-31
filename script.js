@@ -140,9 +140,11 @@ function drawRect(index) {
   );
 }
 
+let targetImg = new Image();
+targetImg.src = "./circle.png";
+
 function drawTarget() {
-  context.fillStyle = "rgb(255, 38, 38)";
-  context.fillRect(target.x, target.y, widthRect, heightRect);
+  context.drawImage(targetImg, target.x, target.y);
 }
 
 /* Detect collision */
