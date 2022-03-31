@@ -2,65 +2,28 @@
 
 const board = document.getElementById("game-board");
 
+const displayScore = document.getElementById("score");
+
 const canvas = document.createElement("canvas");
 const context = canvas.getContext("2d");
 
 const widthCanvas = 400;
 const heightCanvas = 400;
 
-window.addEventListener("load", drawCanvas);
-
-function drawCanvas() {
-  canvas.setAttribute("width", widthCanvas);
-  canvas.setAttribute("height", heightCanvas);
-
-  canvas.style.backgroundColor = "grey";
-
-  //grow tail
-  for (let i = 0; i < rectangle.length; i++) {
-    drawRect(i);
-  }
-
-  //move head
-  let x = rectangle[0].x;
-  let y = rectangle[0].y;
-
-  if (direction === "left") {
-    rectangle[0].x -= rectangle[0].width;
-  } else if (direction === "right") {
-    rectangle[0].x += rectangle[0].width;
-  } else if (direction === "up") {
-    rectangle[0].y -= rectangle[0].height;
-  } else if (direction === "down") {
-    rectangle[0].y += rectangle[0].height;
-  }
-
-  drawTarget();
-
-  board.appendChild(canvas);
-}
-
-/* Move object */
+const widthRect = 20;
+const heightRect = 20;
 
 let rectangle = [];
 
 rectangle[0] = {
   x: Math.floor(widthCanvas / 2),
   y: Math.floor(heightCanvas / 2),
-  width: 20,
-  height: 20,
+  width: widthRect,
+  height: heightRect,
 };
 
-function drawRect(index) {
-  context.clearRect(0, 0, widthCanvas, heightCanvas); //clear the previous position
-  context.fillRect(
-    //add new position
-    rectangle[index].x,
-    rectangle[index].y,
-    rectangle[index].width,
-    rectangle[index].height
-  );
-}
+rectangle[1] = rectangle[0];
+rectangle[2] = rectangle[0];
 
 let direction;
 
@@ -83,18 +46,100 @@ function keyDown({ which }) {
 
 /* Place target randomly */
 
+// Randomize target location
 let target = {
-  x: Math.floor(Math.random() * (widthCanvas - 1)),
-  y: Math.floor(Math.random() * (heightCanvas - 1)),
+  x: Math.floor(Math.random() * (widthCanvas / widthRect)) * widthRect,
+  y: Math.floor(Math.random() * (heightCanvas / heightRect)) * heightRect,
 };
+
+window.addEventListener("load", drawCanvas);
+
+function drawCanvas() {
+  canvas.setAttribute("width", widthCanvas);
+  canvas.setAttribute("height", heightCanvas);
+
+  canvas.style.backgroundColor = "grey";
+
+  //grow tail
+  for (let i = 0; i < rectangle.length; i++) {
+    drawRect(i);
+    if (rectangle[i].x == target.x && rectangle[i].y == target.y) {
+      target = {
+        x: Math.floor(Math.random() * (widthCanvas / widthRect)) * widthRect,
+        y: Math.floor(Math.random() * (heightCanvas / heightRect)) * heightRect,
+      };
+    }
+  }
+  console.log(rectangle.length);
+
+  //move head
+  let frontX = rectangle[0].x;
+  let frontY = rectangle[0].y;
+
+  if (direction === "left") {
+    frontX -= widthRect;
+  } else if (direction === "right") {
+    frontX += widthRect;
+  } else if (direction === "up") {
+    frontY -= heightRect;
+  } else if (direction === "down") {
+    frontY += heightRect;
+  }
+
+  if (frontX == target.x && frontY == target.y) {
+    score += 1;
+    displayScore.innerText = score;
+    target = {
+      x: Math.floor(Math.random() * (widthCanvas / widthRect)) * widthRect,
+      y: Math.floor(Math.random() * (heightCanvas / heightRect)) * heightRect,
+    };
+  } else {
+    rectangle.pop();
+  }
+
+  console.log(score);
+
+  let newFront = {
+    x: frontX,
+    y: frontY,
+  };
+
+  rectangle.unshift(newFront);
+
+  drawTarget();
+
+  //scorePoints();
+
+  board.appendChild(canvas);
+}
+
+/* Move object */
+
+function drawRect(index) {
+  context.fillRect(
+    //add new position
+    rectangle[index].x,
+    rectangle[index].y,
+    widthRect,
+    heightRect
+  );
+}
 
 function drawTarget() {
   context.fillStyle = "blue";
-  context.fillRect(target.x, target.y, rectangle[0].width, rectangle[0].height);
+  context.fillRect(target.x, target.y, widthRect, heightRect);
 }
 
+/* Score points and grow object */
+
+let score = 0;
+
+/* Set speed */
+
+let speed = 130;
+
 // Update canvas every 0.1s
-setInterval(drawCanvas, 100);
+let game = setInterval(drawCanvas, speed);
 
 /* class Rectangle {
   constructor(x, y, width, height, color, speed, direction, length) {
