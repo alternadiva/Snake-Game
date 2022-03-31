@@ -59,7 +59,9 @@ function drawCanvas() {
   canvas.setAttribute("width", widthCanvas);
   canvas.setAttribute("height", heightCanvas);
 
-  canvas.style.backgroundColor = "grey";
+  canvas.style.backgroundColor = "rgb(210, 241, 191)";
+  canvas.style.border = "10px solid rgb(131, 103, 67)";
+  canvas.style.borderRadius = "20px";
 
   //grow tail
   for (let i = 0; i < rectangle.length; i++) {
@@ -89,6 +91,7 @@ function drawCanvas() {
   if (frontX == target.x && frontY == target.y) {
     score += 1;
     displayScore.innerText = score;
+
     target = {
       x: Math.floor(Math.random() * (widthCanvas / widthRect)) * widthRect,
       y: Math.floor(Math.random() * (heightCanvas / heightRect)) * heightRect,
@@ -105,7 +108,6 @@ function drawCanvas() {
   // collision
 
   rectangle.unshift(newFront);
-
   drawTarget();
 
   //game over
@@ -128,6 +130,7 @@ function drawCanvas() {
 /* Move object */
 
 function drawRect(index) {
+  context.fillStyle = "rgb(69, 175, 7)";
   context.fillRect(
     //add new position
     rectangle[index].x,
@@ -138,7 +141,7 @@ function drawRect(index) {
 }
 
 function drawTarget() {
-  context.fillStyle = "blue";
+  context.fillStyle = "rgb(255, 38, 38)";
   context.fillRect(target.x, target.y, widthRect, heightRect);
 }
 
@@ -168,9 +171,15 @@ function saveScore(points) {
 
 bestScore.innerText = localStorage.getItem("score");
 
-/* Set speed */
+/* Increase speed */
 
 let speed = 140;
+
+function speedUp(points) {
+  if (points % 10 == 0) {
+    speed = speed - 5;
+  }
+}
 
 // Update canvas every 0.1s
 let update = setInterval(drawCanvas, speed);
