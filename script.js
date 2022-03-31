@@ -127,6 +127,17 @@ function drawTarget() {
   context.fillRect(target.x, target.y, widthRect, heightRect);
 }
 
+/* Detect collision */
+
+function collision(front, array) {
+  for (let i = 0; i < array.length; i++) {
+    if (front.x == array[i].x && front.y == array[i].y) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /* Score points and grow object */
 
 let score = 0;
@@ -136,7 +147,7 @@ let score = 0;
 let speed = 130;
 
 // Update canvas every 0.1s
-let game = setInterval(drawCanvas, speed);
+let update = setInterval(drawCanvas, speed);
 
 /* class Rectangle {
   constructor(x, y, width, height, color, speed, direction, length) {
