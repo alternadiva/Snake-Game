@@ -3,6 +3,7 @@
 const board = document.getElementById("game-board");
 
 const displayScore = document.getElementById("score");
+const bestScore = document.getElementById("best-score");
 
 const canvas = document.createElement("canvas");
 const context = canvas.getContext("2d");
@@ -115,6 +116,7 @@ function drawCanvas() {
     frontY > heightCanvas - 20 ||
     collision(newFront, rectangle)
   ) {
+    saveScore(score);
     clearInterval(update);
   }
 
@@ -154,6 +156,17 @@ function collision(front, array) {
 /* Score points and grow object */
 
 let score = 0;
+
+/* Save score to local storage */
+
+function saveScore(points) {
+  if (localStorage.getItem("score") < points) {
+    localStorage.clear();
+    localStorage.setItem("score", points);
+  }
+}
+
+bestScore.innerText = localStorage.getItem("score");
 
 /* Set speed */
 
